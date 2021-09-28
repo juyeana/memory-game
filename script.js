@@ -2,27 +2,22 @@ const gameContainer = document.getElementById('game');
 const heading = document.querySelector('h1');
 let bestScore;
 
-const COLORS = [
-  'red',
-  'blue',
-  'green',
-  'orange',
-  'purple',
-  'red',
-  'blue',
-  'green',
-  'orange',
-  'purple',
-];
+// const COLORS = [
+//   '#ff0000',
+//   'blue',
+//   'green',
+//   'orange',
+//   'purple',
+//   '#ff0000',
+//   'blue',
+//   'green',
+//   'orange',
+//   'purple',
+// ];
 
-/**
- * @function shuffle
- * @desc here is a helper function to shuffle an array
- *      it returns the same array with values shuffled
- *      it is based on an algorithm called Fisher Yates if you want to research more
- * @param {Array} array
- * @return {Array}
- */
+//  here is a helper function to shuffle an array
+//  it returns the same array with values shuffled
+//  it is based on an algorithm called Fisher Yates if you want to research more
 
 function shuffle(array) {
   let counter = array.length;
@@ -42,7 +37,9 @@ function shuffle(array) {
   return array;
 }
 
-let shuffledColors = shuffle(COLORS);
+// let shuffledColors = shuffle(COLORS);
+
+let shuffledColors = [];
 
 /**
  * @desc this function loops over the array of colors
@@ -96,6 +93,8 @@ function createDivsForColors(colorArray) {
 /**
  * @desc landing page to start the game
  */
+let numberOfCards;
+let newCards = [];
 
 function startGame() {
   const startBtnWrapper = document.createElement('div');
@@ -105,10 +104,75 @@ function startGame() {
 
   startBtnWrapper.append(startBtn);
   heading.parentNode.insertBefore(startBtnWrapper, heading.nextSibling);
+
+  // ask the player a number of cards to play
+  // default = 10
   startBtn.addEventListener('click', (e) => {
+    numberOfCards = parseInt(
+      window.prompt('How many cards do you want to play?')
+    );
+
+    if (numberOfCards && numberOfCards >= 2)
+      newCards = makeCards(numberOfCards);
+    else newCards = makeCards(10);
+
+    shuffledColors = shuffle(newCards);
+
     gameUI();
     createDivsForColors(shuffledColors);
   });
+}
+
+/**
+ * @desc create a set of cards with random colors
+ * @param {number} numberOfCards
+ * @return {array}
+ */
+function makeCards(numberOfCards) {
+  const cards = [];
+  let numberOfColors = Math.floor(numberOfCards / 2);
+
+  // random colors
+  for (let i = 0; i < numberOfColors; i++) {
+    cards[i] = `#${generateRandomColors().join('')}`;
+  }
+
+  return cards.concat(...cards);
+}
+
+/**
+ * @desc generate hex color
+ * @return {array} 
+ */
+function generateRandomColors() {
+  const HEX = {
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    10: 'A',
+    11: 'B',
+    12: 'C',
+    13: 'D',
+    14: 'E',
+    15: 'F',
+  };
+
+  const results = [];
+  let random;
+
+  for (let i = 0; i < 6; i++) {
+    random = Math.round(Math.random() * 15);
+    results[i] = HEX[random % 16];
+  }
+
+  return results;
 }
 
 /**
@@ -121,7 +185,6 @@ function startGame() {
 let selectedTarget = [];
 let selectedTargetIndex = 0;
 let clickCounter = 0;
-let targetScore = Math.floor(COLORS.length / 2);
 let matchCount = 0;
 let score;
 
@@ -132,6 +195,7 @@ function handleCardClick(event) {
   // keep track of number of clicks and display on the page
   const clickCount = document.querySelector('#click-count');
   const progress = document.querySelector('#score');
+  let targetScore = shuffledColors.length / 2;
   clickCounter++;
   clickCount.innerText = `Clicks: ${clickCounter}`;
 
@@ -165,17 +229,17 @@ function handleCardClick(event) {
         if (selectedTarget[0][1] !== selectedTarget[1][1]) {
           setTimeout(() => {
             for (let i = 0; i < selectedTarget.length; i++) {
-              selectedTarget[i][2].style.backgroundColor = 'white';
+              selectedTarget[i][2].style.backgroundColor = '#ffffff';
             }
             selectedTarget = [];
           }, 1000);
         } else {
           selectedTarget = [];
           matchCount++;
+
           score = Math.ceil((matchCount / targetScore) * 100);
           progress.innerText = `Score: ${score} %`;
 
-          // replay (Y/N)
           setTimeout(() => {
             if (score === 100) {
               // find the best score and update the local storage
@@ -260,7 +324,7 @@ function gameUI() {
  */
 function replayGame() {
   gameUI();
-  createDivsForColors(shuffle(COLORS));
+  createDivsForColors(shuffle(newCards));
 }
 
 /**
