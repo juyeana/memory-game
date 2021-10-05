@@ -1,3 +1,7 @@
+
+/**
+ * This page was for experimental purposes
+ */
 const gameContainer = document.getElementById('game');
 const heading = document.querySelector('h1');
 let bestScore;

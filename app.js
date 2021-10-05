@@ -182,12 +182,14 @@ function handleCardClick(e) {
     bestScore = Math.min(currentScore, bestScore);
     setTimeout(() => {
       let replay = window.prompt(
-        `You Rock! You best score so far is ${bestScore}. Do you want to play again? (Y/N)`
+        `You Rock! Your best score so far is ${bestScore}. Do you want to play again?`, 'Yes'
       );
+
+      console.log(replay)
       // update localStorage with the best score
       localStorage.setItem('bestScore', bestScore);
 
-      if (replay && replay.toUpperCase() === 'Y') {
+      if (replay && replay.toUpperCase() === 'YES') {
         replayGame();
       }
     }, 1000);
