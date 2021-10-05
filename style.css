@@ -1,7 +1,87 @@
-#game div {
+body {
+  font-family: 'Poppins', sans-serif;
+  color: rgb(41, 41, 41);
+  margin: 0;
+  background-color: rgb(241, 241, 241);
+}
+
+#play {
+  display: block;
+  margin: 100px auto;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  background-color: rgb(230, 230, 230);
+  border-radius: 5px;
+  border-color: rgb(78, 223, 35);
+  box-shadow: 1 1 2 rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  size: 3rem;
+}
+button#btn-replay {
+  font-weight: normal;
+  font-size: 0.7rem;
+  width: 70px;
+  height: 20px;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  column-gap: 20px;
+  flex-wrap: nowrap;
+}
+.form-container {
+  display: flex;
+}
+
+#card-form {
+  margin: 10px auto;
+}
+h1 {
+  text-align: center;
+  background-color: rgb(29, 29, 29);
+  color: rgb(165, 165, 165);
+  margin-top: 0;
+  font-size: 3rem;
+  /* color: rgb(129, 129, 129); */
+}
+
+#current-score-title,
+#current-score {
+  color: rgb(39, 94, 175);
+  font-size: 2rem;
+}
+#best-score-title,
+#best-score {
+  color: rgb(78, 223, 35);
+}
+
+label {
+  font-size: 0.8rem;
+}
+
+.game-wrapper {
+  margin: 0 auto;
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+  gap: 5px 5px;
+  justify-content: center;
+}
+
+.front {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(255, 255, 255);
   border: 1px solid black;
-  width: 15%;
-  height: 200px;
-  margin: 10px;
-  display: inline-block;
+  transition: all 1.5s;
+}
+
+#game {
+  visibility: hidden;
 }
