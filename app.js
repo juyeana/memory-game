@@ -170,6 +170,9 @@ function handleCardClick(e) {
           card2.style.transform = 'rotateY(0deg)';
           card1.style.backgroundColor = 'white';
           card2.style.backgroundColor = 'white';
+          card1.addEventListener('click', handleCardClick);
+          card2.addEventListener('click', handleCardClick);
+
           card1 = null;
           card2 = null;
           flipped = 0;
@@ -182,7 +185,8 @@ function handleCardClick(e) {
     bestScore = Math.min(currentScore, bestScore);
     setTimeout(() => {
       let replay = window.prompt(
-        `You Rock! Your best score so far is ${bestScore}. Do you want to play again?`, 'Yes'
+        `You Rock! Your best score so far is ${bestScore}. Do you want to play again?`,
+        'Yes'
       );
       // update localStorage with the best score
       localStorage.setItem('bestScore', bestScore);
@@ -204,6 +208,8 @@ function setCardAttribute(card, target) {
   card = target;
   card.style.transform = 'rotateY(180deg)';
   card.style.backgroundColor = card.id;
+  card.removeEventListener('click', handleCardClick);
+
   return card;
 }
 
@@ -220,7 +226,7 @@ function replayGame() {
 }
 
 /**
- * @desc when the player clicks on the 'replay' button on the game  
+ * @desc when the player clicks on the 'replay' button on the game
  */
 function replayForm() {
   const formContainer = document.querySelector('.form-container');
