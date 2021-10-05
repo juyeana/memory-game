@@ -184,8 +184,6 @@ function handleCardClick(e) {
       let replay = window.prompt(
         `You Rock! Your best score so far is ${bestScore}. Do you want to play again?`, 'Yes'
       );
-
-      console.log(replay)
       // update localStorage with the best score
       localStorage.setItem('bestScore', bestScore);
 
