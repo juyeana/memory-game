@@ -53,8 +53,9 @@ function createDivsForColors(colorArray) {
     // create a new div
     const newDiv = document.createElement('div');
 
-    // give it a class attribute for the value we are looping over
-    newDiv.classList.add(color);
+    // give it a class and id attribute for the value we are looping over
+    newDiv.id = color;
+    newDiv.classList.add('back');
 
     // call a function handleCardClick when a div is clicked on
     newDiv.addEventListener('click', handleCardClick);
@@ -142,7 +143,7 @@ function makeCards(numberOfCards) {
 
 /**
  * @desc generate hex color
- * @return {array} 
+ * @return {array}
  */
 function generateRandomColors() {
   const HEX = {
@@ -199,7 +200,7 @@ function handleCardClick(event) {
   clickCounter++;
   clickCount.innerText = `Clicks: ${clickCounter}`;
 
-  let color = event.target.className;
+  let color = event.target.id;
 
   // get the index number of target from parentNode > HTMLCollection
   let index = getCardIndex(event.target);
@@ -230,10 +231,18 @@ function handleCardClick(event) {
           setTimeout(() => {
             for (let i = 0; i < selectedTarget.length; i++) {
               selectedTarget[i][2].style.backgroundColor = '#ffffff';
+              // selectedTarget[i][2].className = 'front';
+              // console.log(selectedTarget[i][2].className)
             }
             selectedTarget = [];
           }, 1000);
         } else {
+          selectedTarget[0][2].classList = 'flipped';
+          selectedTarget[0][2].removeEventListener('click', handleCardClick);
+
+          selectedTarget[1][2].classList = 'flipped';
+          selectedTarget[1][2].removeEventListener('click', handleCardClick);
+
           selectedTarget = [];
           matchCount++;
 
